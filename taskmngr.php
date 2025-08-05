@@ -196,5 +196,5 @@ if($rowchk['acct_type'] == "Admin"){
 End Pagination-->
     </div>
 </div>
-
+<script src="./js/updtask.js"></script>
 <?php require_once('./require/footer.php');?>

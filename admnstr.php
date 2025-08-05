@@ -6,10 +6,10 @@ if($rowchk['acct_type'] !== "Admin"){
 	header("Location: home.php");
 } else {
 	// Fetch all accounts
-	$stmt = $con->prepare("SELECT *	FROM accounts"); 
+	$stmt = mysqli_prepare($con, "SELECT *	FROM accounts"); 
 	}
 	// Count policies for each user
-	// $stmt = $con->prepare("SELECT a.id, a.username, a.email, a.acct_type, COUNT(c.policy) as policies 
+	// $stmt = mysqli_prepare($con, "SELECT a.id, a.username, a.email, a.acct_type, COUNT(c.policy) as policies 
 	// 						FROM accounts AS a
 	// 						LEFT JOIN clients AS c ON a.id = c.acct_id
 	// 						GROUP BY a.id"); 
@@ -20,7 +20,7 @@ $result = $stmt->get_result();
 $stmt->close();
 
 // Get list of policies
-$pol_stmt = $con->prepare("SELECT * FROM policies");
+$pol_stmt = mysqli_prepare($con, "SELECT * FROM policies");
 $pol_stmt->execute();
 $pol_res = $pol_stmt->get_result();
 $pol_stmt->close();
@@ -40,7 +40,10 @@ $pol_stmt->close();
 				<div class="modal-body">
 					<div id="errorMessageUpdate" class="alert alert-warning d-none">
 					</div>
-						<input type="hidden" name="id" id="id" class="form-control" /> 
+						<div class="col-md6">
+							<label for="id">ID</label>
+							<input type="number" name="id" id="id" class="form-control" /> 
+						</div>	
 					<div class="col-md6">
 						<label for="username">Username</label>
 						<input type="text" name="username" id="username" class="form-control" />						
@@ -72,14 +75,17 @@ $pol_stmt->close();
     <div class="modal-dialog">
         <div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Edit Task</h5>
+				<h5 class="modal-title" id="exampleModalLabel">Edit Policy</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<form id="updatePol">
 				<div class="modal-body">
 					<div id="errorMessageUpdate" class="alert alert-warning d-none">
 					</div>
-						<input type="hidden" name="id" id="id" class="form-control" /> 
+						<div class="col-md6">
+							<label for="id">ID</label>
+							<input type="number" name="id" id="id" class="form-control" /> 
+						</div>	
 					<div class="w3-row">
 						<div class="col-md6">
 							<label for="policy">Policy</label>
@@ -145,16 +151,18 @@ $pol_stmt->close();
 			<h2>User Accounts</h2>
 				<table class="w3-table" id="srtTable">
 					<thead>
-					<tr>						
+					<tr>
+						<th>ID</th>						
 						<th><a href="javascript:SortTable(0,'T');">Username <i class="fa fa-sort"></a></th>
 						<th>Email</th>
 						<th>Account Type</th>
 						<th>Action</th>
 					</tr>
 					</thead>
-				<?php while ($row = $result->FETCH_ASSOC()): ?>
+				<?php while ($row = mysqli_fetch_array($result)): ?>
 					<tbody>
 					<tr>
+						<td><?=$row['id']?></td>
 						<td><?=htmlspecialchars($row['username'])?></td>
 						<td><?=htmlspecialchars($row['email'])?></td>
 						<td><?=htmlspecialchars($row['acct_type'])?></td>
@@ -174,19 +182,21 @@ $pol_stmt->close();
 			</div>
 				<table class="w3-table" id="srtTable">
 					<thead>
-					<tr>						
+					<tr>
+						<th>ID</th>									
 						<th><a href="javascript:SortTable(1,'T');">Policy <i class="fa fa-sort"></a></th>
 						<th>Description</th>
 						<th>Other</th>
 						<th class="w3-center">Action</th>
 					</tr>
 					</thead>
-				<?php while ($row = $pol_res->FETCH_ASSOC()): ?>
+				<?php while ($row = mysqli_fetch_array($pol_res)): ?>
 					<tbody>
 					<tr>
+						<td><?=$row['id']?></td>
 						<td><?=htmlspecialchars($row['policy'])?></td>
-						<td><?=htmlspecialchars($row['descr'])?></td>
 						<td><?=htmlspecialchars($row['other'])?></td>
+						<td><?=htmlspecialchars($row['descr'])?></td>
 						<td class="w3-center">
 							<button type="button" value="<?=$row['id'];?>" class="editPolBtn w3-btn edit"><i class="fas fa-edit fa-xs"></i></button>
 						</td>

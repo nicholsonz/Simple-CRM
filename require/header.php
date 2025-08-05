@@ -50,6 +50,7 @@ if($rowchk['acct_type'] == "Admin"){
       		<link rel="icon" href="./favicon.ico">
 			<!-- Load Javascript files -->
 			<script src="./js/chart.min.js"></script>
+			<script src="./js/popper.js"></script>
 			<script src="./js/jquery-3.7.1.min.js"></script>
 			<script src="./js/bootstrap.bundle.min.js"></script>
 			<script src="./js/alertify/alertify.min.js"></script>

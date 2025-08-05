@@ -1,19 +1,15 @@
 <?php 
 require '../include/config.php';
 
-// We need to use sessions, so you should always start sessions using the below code.
-if (!session_start() || session_status() === PHP_SESSION_NONE) {
-  session_start();
-}
 
 if(isset($_GET['id']))
 {
     $id = $_GET['id'];
 
-    $get_id = mysqli_prepare($con, "SELECT id, policy, descr, other FROM policies WHERE id=?");
-      mysqli_stmt_bind_param($get_id, "i", $id);
-    $get_id->execute();
-    $result = $get_id->get_result();
+    $get_info = mysqli_prepare($con, "SELECT id, policy, other, descr FROM policies WHERE id=?");
+      mysqli_stmt_bind_param($get_info, "i", $id);
+    $get_info->execute();
+    $result = $get_info->get_result();
     $rows = mysqli_num_rows($result);
 
     if($rows == 1)

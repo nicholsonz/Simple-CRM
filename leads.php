@@ -54,7 +54,7 @@ $stmt->close();
                     <?php while ($row = $result->FETCH_ASSOC()): ?>
         	    <tr>
                   <td><input type="checkbox" class="name" value="<?=$row['id']?>"></td>
-                  <td><a href="./updatelead.php?name=<?=$row['name']?>"><?=$row['name']?></a></td>
+                  <td><a href="./viewLds.php?name=<?=$row['name']?>"><?=$row['name']?></a></td>
                   <td><?=$row['birthdate']?></td>
                   <td><?=$row['phone']?></td>
                   <td><?=$row['zip']?></td>
